@@ -5,6 +5,7 @@ type AlgoliasearchClientIndex = {
   clearIndex: () => Promise<*>,
   addObject: ({}) => Promise<*>,
   saveObject: ({ objectID: string }) => Promise<*>,
+  setSettings: ({}, { forwardToReplicas: boolean }) => Promise<*>,
   deleteObject: string => Promise<*>,
 };
 
@@ -42,6 +43,11 @@ export default function createAlgoliaMongooseModel({
 
       const docs = await this.find({ _algoliaObjectID: { $eq: null } });
       await Promise.all(docs.map(doc => doc.pushToAlgolia()));
+    }
+
+    // * set one or more settings of the algolia index
+    static setAlgoliaIndexSettings(settings: {}, forwardToReplicas: boolean) {
+      return index.setSettings(settings, { forwardToReplicas });
     }
 
     // * push new document to algolia

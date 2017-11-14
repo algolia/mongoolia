@@ -46,7 +46,11 @@ BookSchema.plugin(mongoolia, {
 
 After applying the `mongoolia` plugin to your mongoose model it registers new static methods:
 
-| Method name               | Description
-| -                         | -
-| `Model.syncWithAlgolia`   | Index the whole collection into your Algolia index.
-| `Model.clearAlgoliaIndex` | Clears your Algolia index and remove `_algoliaObjectID` from your documents.
+`Model.syncWithAlgolia()`
+> Index the whole collection into your Algolia index.
+
+`Model.clearAlgoliaIndex()`
+> Clears your Algolia index and remove `_algoliaObjectID` from your documents.
+
+`Model.setAlgoliaIndexSettings(settings: {}, forwardToReplicas: boolean)`
+> Set one or more settings of the Algolia index, the full settings list is available [here](https://www.algolia.com/doc/api-reference/settings-api-parameters/).
