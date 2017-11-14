@@ -19,7 +19,10 @@ const validateOpts = options => {
   });
 };
 
-function mongoolia(schema: Mongoose$Schema<any>, options: MongooliaOpts) {
+const mongoolia: Mongoose$SchemaPlugin<MongooliaOpts> = function(
+  schema: Mongoose$Schema<any>,
+  options: MongooliaOpts
+) {
   validateOpts(options);
 
   // add new Algolia objectID field
@@ -44,6 +47,6 @@ function mongoolia(schema: Mongoose$Schema<any>, options: MongooliaOpts) {
   schema.post('save', doc => doc.postSaveHook());
   schema.post('update', doc => doc.postUpdateHook());
   schema.post('remove', doc => doc.postRemoveHook());
-}
+};
 
 export default mongoolia;

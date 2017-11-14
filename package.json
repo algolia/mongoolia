@@ -6,9 +6,8 @@
   "author": "iam4x",
   "license": "MIT",
   "scripts": {
-    "dev": "babel src --out-dir dist -w",
     "build": "babel src --out-dir dist",
-    "test": "babel-watch test.js"
+    "test": "jest"
   },
   "dependencies": {
     "algoliasearch": "^3.24.5",
@@ -19,6 +18,7 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.0.2",
+    "babel-jest": "^21.2.0",
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-stage-0": "^6.24.1",
@@ -27,9 +27,11 @@
     "eslint-config-prettier": "^2.7.0",
     "eslint-plugin-flowtype": "^2.39.1",
     "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jest": "^21.3.2",
     "eslint-plugin-prettier": "^2.3.1",
     "flow-bin": "^0.59.0",
     "flow-typed": "^2.2.3",
+    "jest": "^21.2.1",
     "prettier": "^1.8.2"
   }
 }

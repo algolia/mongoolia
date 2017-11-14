@@ -1,3 +1,3 @@
 module.exports = {
-  extends: 'algolia/flowtype'
+  extends: ['algolia/flowtype', 'algolia/jest']
 };
