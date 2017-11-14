@@ -9,6 +9,9 @@
     "build": "babel src --out-dir dist",
     "test": "jest"
   },
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "algoliasearch": "^3.24.5",
     "babel-watch": "^2.0.7",
