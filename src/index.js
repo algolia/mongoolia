@@ -23,7 +23,9 @@ function mongoolia(schema: Mongoose$Schema<any>, options: MongooliaOpts) {
   validateOpts(options);
 
   // add new Algolia objectID field
-  schema.add({ _algoliaObjectID: { type: String, required: false } });
+  schema.add({
+    _algoliaObjectID: { type: String, required: false, select: false },
+  });
 
   // initialize Algolia client
   const { appId, apiKey, indexName } = options;

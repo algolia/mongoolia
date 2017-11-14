@@ -46,11 +46,51 @@ BookSchema.plugin(mongoolia, {
 
 After applying the `mongoolia` plugin to your mongoose model it registers new static methods:
 
-`Model.syncWithAlgolia()`
-> Index the whole collection into your Algolia index.
+##### `Model.syncWithAlgolia(): Promise`
+Index the whole collection into your Algolia index.
 
-`Model.clearAlgoliaIndex()`
-> Clears your Algolia index and remove `_algoliaObjectID` from your documents.
+##### `Model.clearAlgoliaIndex(): Promise`
+Clears your Algolia index and remove `_algoliaObjectID` from your documents.
 
-`Model.setAlgoliaIndexSettings(settings: {}, forwardToReplicas: boolean)`
-> Set one or more settings of the Algolia index, the full settings list is available [here](https://www.algolia.com/doc/api-reference/settings-api-parameters/).
+##### `Model.setAlgoliaIndexSettings(settings: {}, forwardToReplicas: boolean): Promise`
+Set one or more settings of the Algolia index, the full settings list is available [here](https://www.algolia.com/doc/api-reference/settings-api-parameters/).
+
+##### `Model.algoliaSearch({ query: string, params?: {}, populate?: boolean }): Promise`
+Search into your Algolia index for a specific query. You can customize the search parameters as well.
+
+You can find the full list of search parameters [here](https://www.algolia.com/doc/api-reference/api-parameters/), you should look for settings tagged with `search`.
+
+The server response will look like:
+
+```json
+{
+  "hits": [
+    {
+      "firstname": "Jimmie",
+      "lastname": "Barninger",
+      "objectID": "433",
+      "_highlightResult": {
+        "firstname": {
+          "value": "<em>Jimmie</em>",
+          "matchLevel": "partial"
+        },
+        "lastname": {
+          "value": "Barninger",
+          "matchLevel": "none"
+        },
+        "company": {
+          "value": "California <em>Paint</em> & Wlpaper Str",
+          "matchLevel": "partial"
+        }
+      }
+    }
+  ],
+  "page": 0,
+  "nbHits": 1,
+  "nbPages": 1,
+  "hitsPerPage": 20,
+  "processingTimeMS": 1,
+  "query": "jimmie paint",
+  "params": "query=jimmie+paint&attributesToRetrieve=firstname,lastname&hitsPerPage=50"
+}
+```

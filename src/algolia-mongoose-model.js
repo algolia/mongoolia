@@ -1,11 +1,12 @@
 /* @flow */
-import { pick } from 'lodash';
+import { reduce, omit, find, map, pick } from 'lodash';
 
 type AlgoliasearchClientIndex = {
   clearIndex: () => Promise<*>,
   addObject: ({}) => Promise<*>,
   saveObject: ({ objectID: string }) => Promise<*>,
   setSettings: ({}, { forwardToReplicas: boolean }) => Promise<*>,
+  search: ({ query: string }) => Promise<*>,
   deleteObject: string => Promise<*>,
 };
 
@@ -23,7 +24,8 @@ export default function createAlgoliaMongooseModel({
     collection: { update: ({ _id: MongoId }, {}) => Promise<*> };
     toJSON: () => JSON;
 
-    static find: ({}) => Promise<*>;
+    static schema: { obj: {} };
+    static find: ({}, ?{}) => Promise<*>;
     static update: ({}, {}) => Promise<*>;
 
     // * clears algolia index
@@ -48,6 +50,54 @@ export default function createAlgoliaMongooseModel({
     // * set one or more settings of the algolia index
     static setAlgoliaIndexSettings(settings: {}, forwardToReplicas: boolean) {
       return index.setSettings(settings, { forwardToReplicas });
+    }
+
+    // * search the index
+    static async algoliaSearch({
+      query,
+      params,
+      populate,
+    }: {
+      query: string,
+      params: ?{},
+      populate: boolean,
+    }) {
+      const searchParams = { ...params, query };
+      const data = await index.search(searchParams);
+
+      // * populate hits with content from mongodb
+      if (populate) {
+        // find objects into mongodb matching `objectID` from Algolia search
+        const hitsFromMongoose = await this.find(
+          {
+            _algoliaObjectID: { $in: map(data.hits, 'objectID') },
+          },
+          reduce(
+            this.schema.obj,
+            (results: {}, val: {}, key: string) => ({ ...results, [key]: 1 }),
+            { _algoliaObjectID: 1 }
+          )
+        );
+
+        // add additional data from mongodb into Algolia hits
+        const populatedHits = data.hits.map(hit => {
+          const ogHit = find(hitsFromMongoose, {
+            _algoliaObjectID: hit.objectID,
+          });
+
+          return omit(
+            {
+              ...(ogHit ? ogHit.toJSON() : {}),
+              ...hit,
+            },
+            ['_algoliaObjectID']
+          );
+        });
+
+        data.hits = populatedHits;
+      }
+
+      return data;
     }
 
     // * push new document to algolia
