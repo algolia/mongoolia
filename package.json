@@ -1,0 +1,35 @@
+{
+  "name": "mongoolia",
+  "version": "1.0.0",
+  "description": "Keep your mongoose schemas synced with Algolia",
+  "main": "dist/index.js",
+  "author": "iam4x",
+  "license": "MIT",
+  "scripts": {
+    "dev": "babel src --out-dir dist -w",
+    "build": "babel src --out-dir dist",
+    "test": "babel-watch test.js"
+  },
+  "dependencies": {
+    "algoliasearch": "^3.24.5",
+    "babel-watch": "^2.0.7",
+    "lodash": "^4.17.4",
+    "mongoose": "^4.13.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.0.2",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "eslint": "^4.11.0",
+    "eslint-config-algolia": "^12.0.0",
+    "eslint-config-prettier": "^2.7.0",
+    "eslint-plugin-flowtype": "^2.39.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-prettier": "^2.3.1",
+    "flow-bin": "^0.59.0",
+    "flow-typed": "^2.2.3",
+    "prettier": "^1.8.2"
+  }
+}
