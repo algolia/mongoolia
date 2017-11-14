@@ -46,16 +46,16 @@ BookSchema.plugin(mongoolia, {
 
 After applying the `mongoolia` plugin to your mongoose model it registers new static methods:
 
-##### `Model.syncWithAlgolia(): Promise`
+#### `Model.syncWithAlgolia(): Promise`
 Index the whole collection into your Algolia index.
 
-##### `Model.clearAlgoliaIndex(): Promise`
+#### `Model.clearAlgoliaIndex(): Promise`
 Clears your Algolia index and remove `_algoliaObjectID` from your documents.
 
-##### `Model.setAlgoliaIndexSettings(settings: {}, forwardToReplicas: boolean): Promise`
+#### `Model.setAlgoliaIndexSettings(settings: {}, forwardToReplicas: boolean): Promise`
 Set one or more settings of the Algolia index, the full settings list is available [here](https://www.algolia.com/doc/api-reference/settings-api-parameters/).
 
-##### `Model.algoliaSearch({ query: string, params?: {}, populate?: boolean }): Promise`
+#### `Model.algoliaSearch({ query: string, params?: {}, populate?: boolean }): Promise`
 Search into your Algolia index for a specific query. You can customize the search parameters as well.
 
 You can find the full list of search parameters [here](https://www.algolia.com/doc/api-reference/api-parameters/), you should look for settings tagged with `search`.
