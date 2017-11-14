@@ -1,9 +1,11 @@
 {
   "name": "mongoolia",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Keep your mongoose schemas synced with Algolia",
+  "homepage": "https://github.com/algolia/mongoolia",
+  "repository": "algolia/mongoolia",
   "main": "dist/index.js",
-  "author": "iam4x",
+  "author": "Algolia <support@algolia.com>",
   "license": "MIT",
   "scripts": {
     "build": "babel src --out-dir dist",
