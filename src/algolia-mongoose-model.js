@@ -32,7 +32,7 @@ export default function createAlgoliaMongooseModel({
     // * removes `_algoliaObjectID` from documents
     static async clearAlgoliaIndex() {
       await index.clearIndex();
-      await this.update(
+      await this.collection.update(
         { _algoliaObjectID: { $exists: true } },
         { $set: { _algoliaObjectID: null } }
       );
