@@ -1,6 +1,6 @@
 {
   "name": "mongoolia",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Keep your mongoose schemas synced with Algolia",
   "homepage": "https://github.com/algolia/mongoolia",
   "repository": "algolia/mongoolia",
