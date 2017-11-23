@@ -16,8 +16,13 @@ First install the library:
 Then you need to specify which fields of your schema you want to index with Algolia and register the plugin to your mongoose model created with this schema:
 
 ```js
+// ES6
 import mongoose from 'mongoose';
 import mongoolia from 'mongoolia';
+
+// ES5
+const mongoose = require('mongoose');
+const mongoolia = require('mongoolia').default;
 
 // Pass `{algoliaIndex: true}` to push theses attributes for indexing to Algolia
 const BookSchema = new mongoose.Schema({
