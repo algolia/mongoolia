@@ -1,5 +1,5 @@
 /* @flow */
-import { reduce, omit, find, map, pick } from 'lodash';
+import { reduce, omit, find, map, pick, zipWith } from 'lodash';
 
 type AlgoliasearchClientIndex = {
   clearIndex: () => Promise<*>,
@@ -32,7 +32,7 @@ export default function createAlgoliaMongooseModel({
     // * removes `_algoliaObjectID` from documents
     static async clearAlgoliaIndex() {
       await index.clearIndex();
-      await this.collection.update(
+      await this.collection.updateMany(
         { _algoliaObjectID: { $exists: true } },
         { $set: { _algoliaObjectID: null } }
       );
@@ -44,7 +44,12 @@ export default function createAlgoliaMongooseModel({
       await this.clearAlgoliaIndex();
 
       const docs = await this.find({ _algoliaObjectID: { $eq: null } });
-      await Promise.all(docs.map(doc => doc.pushToAlgolia()));
+      const { objectIDs } = await index.addObjects(docs.map(doc => pick(doc, attributesToIndex)));
+      
+      return await Promise.all(zipWith(docs, objectIDs, (doc, _algoliaObjectID) => {
+        doc._algoliaObjectID = _algoliaObjectID;
+        return doc.save();
+      }));
     }
 
     // * set one or more settings of the algolia index
@@ -106,7 +111,7 @@ export default function createAlgoliaMongooseModel({
       const object = pick(this.toJSON(), attributesToIndex);
       const { objectID } = await index.addObject(object);
 
-      this.collection.update(
+      this.collection.updateOne(
         { _id: this._id },
         { $set: { _algoliaObjectID: objectID } }
       );

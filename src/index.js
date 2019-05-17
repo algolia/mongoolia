@@ -27,7 +27,7 @@ const mongoolia: Mongoose$SchemaPlugin<MongooliaOpts> = function(
 
   // add new Algolia objectID field
   schema.add({
-    _algoliaObjectID: { type: String, required: false, select: false },
+    _algoliaObjectID: { type: String, required: false, select: true },
   });
 
   // initialize Algolia client

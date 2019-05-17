@@ -8,7 +8,7 @@ You can also index your whole collection if you didn't use this plugin when you 
 
 ## How to
 
-**Only supports mongoose v4**
+**Only supports mongoose v5**
 
 First install the library:
 
