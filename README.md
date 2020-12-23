@@ -35,7 +35,7 @@ const BookSchema = new mongoose.Schema({
 
 // Specify your Algolia credentials which you can find into your dashboard
 BookSchema.plugin(mongoolia, {
-  appId: 'xxxxx'
+  appId: 'xxxxx',
   apiKey: 'xxxx',
   indexName: 'xxxx'
 })
