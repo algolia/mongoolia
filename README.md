@@ -1,6 +1,8 @@
 # mongoolia
 
-> Keep your [mongoosejs](http://mongoosejs.com/) schemas synced with [Algolia](http://www.algolia.com)
+Keep your [Mongoose](http://mongoosejs.com/) schemas synced with [Algolia](http://www.algolia.com)
+
+> While this plugin was created by Algolia, it is not an officially supported API client. It is possible that future major versions of Mongoose break compatibility, or require changes.
 
 This plugin will automatically synchronise your models with an Algolia index every time a new document is added, updated or removed.
 
